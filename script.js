@@ -19,6 +19,7 @@ window.onload = function () {
 	showTime();
 	updateQuote();
 	findMe();
+	document.getElementById('myDIV').style.display = 'none';
 };
 function showTime() {
 	let time = new Date();
@@ -50,6 +51,29 @@ function showTime() {
 	// alert(`${hour}:${min}`);
 	document.getElementById('number').textContent = `${hour}:${min}`;
 	// document.getElementById('timeZone').textContent = zone;
+
+	// console.log(time);
+
+	const timestmp = new Date().setFullYear(new Date().getFullYear(), 0, 1);
+	// idk what this does
+	const yearFirstDay = Math.floor(timestmp / 86400000);
+	// rounds number down
+	const today = Math.ceil(new Date().getTime() / 86400000);
+	// idk
+	const dayOfYear = today - yearFirstDay;
+	// idk
+
+	let dayOfWeek = time.getDay();
+
+	document.querySelector('.currentDayYear').textContent = `${dayOfYear}`;
+	document.querySelector('.currentDayWeek').textContent = `${dayOfWeek}`;
+
+	var numberOfDays = Math.floor((time - timestmp) / (24 * 60 * 60 * 1000));
+	// idk
+	var weekNumber = Math.ceil((time.getDay() + 1 + numberOfDays) / 7);
+	// idk
+	document.querySelector('.currentWeekNumber').textContent = `${weekNumber}`;
+	// break it down
 }
 
 function findMe() {
@@ -70,6 +94,7 @@ function findMe() {
 				// console.log(data);
 				// console.log(data.city);
 				status.textContent = `In ${data.city}, ${data.countryName}`;
+				document.querySelector('.currentPlace').textContent = `${data.city}`;
 			});
 
 		// const response = await fetch(geoURL);
@@ -89,4 +114,17 @@ function findMe() {
 	}
 
 	navigator.geolocation.getCurrentPosition(success, error);
+}
+
+function more() {
+	var x = document.getElementById('myDIV');
+	if (x.style.display === 'none') {
+		x.style.display = 'block';
+		document.getElementById('more').innerHTML =
+			'Less <i class="bi bi-arrow-down-circle-fill"></i>';
+	} else {
+		x.style.display = 'none';
+		document.getElementById('more').innerHTML =
+			'More <i class="bi bi-arrow-down-circle-fill"></i>';
+	}
 }
