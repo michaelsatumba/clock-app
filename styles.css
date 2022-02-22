@@ -81,12 +81,26 @@ p {
 	border-radius: 40px;
 }
 
+#myDIV {
+	background-color: black;
+}
+
+/* #myDIV p {
+	color: black;
+} */
+
 .currentTimezone {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-evenly;
 	margin-top: 20px;
+	/* background-color: red;
+	color: black; */
 }
+
+/* .currentPlace {
+	color: black;
+} */
 
 .dayYear {
 	display: flex;

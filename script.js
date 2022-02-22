@@ -22,7 +22,7 @@ window.onload = function () {
 	document.getElementById('myDIV').style.display = 'none';
 };
 function showTime() {
-	let time = new Date();
+	let time = new Date('December 17, 1995 13:24:00');
 	let hour = time.getHours();
 	let min = time.getMinutes();
 	if (min < 10) {
@@ -34,18 +34,28 @@ function showTime() {
 		// alert('gm');
 		document.getElementById('greeting').innerHTML =
 			'<i class="bi bi-brightness-alt-high-fill"></i> GOOD MORNING';
+		document.getElementById('myDIV').style.backgroundColor = 'white';
+		document
+			.getElementById('myDIV')
+			.querySelectorAll('p')
+			.forEach((e) => (e.style.color = 'black'));
+		// fix
+		// understand for each loop
 	} else if (hour >= 12 && hour < 18) {
 		// alert('gn');
 		document.getElementById('greeting').innerHTML =
 			'<i class="bi bi-brightness-high-fill"></i></i> GOOD AFTERNOON';
 		document.body.style.backgroundImage =
 			"url('https://www.wellplannedjourney.com/wp-content/uploads/Tunnel-View-Yosemite.jpg')";
-		('');
+		(''); // what is this?
+		document.getElementById('myDIV').style.backgroundColor = 'orange';
+		// change the background color so white text looks good
 	} else {
 		document.getElementById('greeting').innerHTML =
 			'<i class="bi bi-moon-fill"></i> GOOD EVENING';
 		document.body.style.backgroundImage =
 			"url('https://media.istockphoto.com/photos/stargazing-at-yosemite-national-park-picture-id974063498?k=20&m=974063498&s=612x612&w=0&h=YXr69UHZcCugJvHalTkYofbg-xg5pQTOrfIf1t18_b4=')";
+		document.getElementById('myDIV').style.backgroundColor = 'black';
 	}
 	// let zone = time.Intl.DateTimeFormat().resolvedOptions().timeZone;
 	// alert(`${hour}:${min}`);
@@ -111,6 +121,9 @@ function findMe() {
 
 	function error(showError) {
 		status.textContent = `I'm going to find you`;
+		document.querySelector(
+			'.currentPlace'
+		).textContent = `I'm still going to find you`;
 	}
 
 	navigator.geolocation.getCurrentPosition(success, error);
@@ -121,7 +134,7 @@ function more() {
 	if (x.style.display === 'none') {
 		x.style.display = 'block';
 		document.getElementById('more').innerHTML =
-			'Less <i class="bi bi-arrow-down-circle-fill"></i>';
+			'Less <i class="bi bi-arrow-up-circle-fill"></i>';
 	} else {
 		x.style.display = 'none';
 		document.getElementById('more').innerHTML =
