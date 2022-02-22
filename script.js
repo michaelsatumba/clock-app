@@ -1,5 +1,14 @@
 // alert('hello');
 
+// on refresh calls functions
+window.onload = function () {
+	showTime();
+	updateQuote();
+	findMe();
+	document.getElementById('myDIV').style.display = 'none';
+};
+
+// calls api for quotes
 async function updateQuote() {
 	// Fetch a random quote from the Quotable API
 	const response = await fetch('https://api.quotable.io/random');
@@ -15,18 +24,14 @@ async function updateQuote() {
 	}
 }
 
-window.onload = function () {
-	showTime();
-	updateQuote();
-	findMe();
-	document.getElementById('myDIV').style.display = 'none';
-};
+// time logic
 function showTime() {
-	let time = new Date('December 17, 1995 13:24:00');
-	let hour = time.getHours();
-	let min = time.getMinutes();
+	let time = new Date(); // gets current date
+	let hour = time.getHours(); // gets current hour
+	let min = time.getMinutes(); // gets current minute
 	if (min < 10) {
 		min = '0' + min;
+		// if minute is less than 10 add a '0'
 	} else {
 		min = min;
 	}
@@ -34,58 +39,58 @@ function showTime() {
 		// alert('gm');
 		document.getElementById('greeting').innerHTML =
 			'<i class="bi bi-brightness-alt-high-fill"></i> GOOD MORNING';
-		document.getElementById('myDIV').style.backgroundColor = 'white';
+		document.getElementById('myDIV').style.backgroundImage =
+			'linear-gradient(gray, white)';
 		document
 			.getElementById('myDIV')
 			.querySelectorAll('p')
-			.forEach((e) => (e.style.color = 'black'));
-		// fix
+			.forEach((element) => (element.style.color = 'black'));
 		// understand for each loop
+		// gets #myDIV then gets all p elements in the div
+		// calls function for each p element
 	} else if (hour >= 12 && hour < 18) {
 		// alert('gn');
 		document.getElementById('greeting').innerHTML =
 			'<i class="bi bi-brightness-high-fill"></i></i> GOOD AFTERNOON';
 		document.body.style.backgroundImage =
 			"url('https://www.wellplannedjourney.com/wp-content/uploads/Tunnel-View-Yosemite.jpg')";
-		(''); // what is this?
-		document.getElementById('myDIV').style.backgroundColor = 'orange';
+		document.getElementById('myDIV').style.backgroundImage =
+			'linear-gradient(#ff4e00 0%, #ec9f05 74%)';
 		// change the background color so white text looks good
 	} else {
 		document.getElementById('greeting').innerHTML =
 			'<i class="bi bi-moon-fill"></i> GOOD EVENING';
 		document.body.style.backgroundImage =
 			"url('https://media.istockphoto.com/photos/stargazing-at-yosemite-national-park-picture-id974063498?k=20&m=974063498&s=612x612&w=0&h=YXr69UHZcCugJvHalTkYofbg-xg5pQTOrfIf1t18_b4=')";
-		document.getElementById('myDIV').style.backgroundColor = 'black';
+		document.getElementById('myDIV').style.backgroundImage = 'black';
 	}
-	// let zone = time.Intl.DateTimeFormat().resolvedOptions().timeZone;
-	// alert(`${hour}:${min}`);
-	document.getElementById('number').textContent = `${hour}:${min}`;
-	// document.getElementById('timeZone').textContent = zone;
 
-	// console.log(time);
+	// alert(`${hour}:${min}`);
+	document.getElementById('number').textContent = `${hour}:${min}`; // displays current hour and time
 
 	const timestmp = new Date().setFullYear(new Date().getFullYear(), 0, 1);
-	// idk what this does
+	// this equals to one full year, numbers represent first month and first day
 	const yearFirstDay = Math.floor(timestmp / 86400000);
-	// rounds number down
+	// rounds number down, number represents milliseconds
 	const today = Math.ceil(new Date().getTime() / 86400000);
-	// idk
+	// math.ceil rounds number up
 	const dayOfYear = today - yearFirstDay;
-	// idk
+	// today - first day of the year
 
 	let dayOfWeek = time.getDay();
+	// gets the day of the week
 
-	document.querySelector('.currentDayYear').textContent = `${dayOfYear}`;
-	document.querySelector('.currentDayWeek').textContent = `${dayOfWeek}`;
+	document.querySelector('.currentDayYear').textContent = `${dayOfYear}`; // displays current day of the year
+	document.querySelector('.currentDayWeek').textContent = `${dayOfWeek}`; // displays current day of the week
 
-	var numberOfDays = Math.floor((time - timestmp) / (24 * 60 * 60 * 1000));
-	// idk
-	var weekNumber = Math.ceil((time.getDay() + 1 + numberOfDays) / 7);
-	// idk
-	document.querySelector('.currentWeekNumber').textContent = `${weekNumber}`;
-	// break it down
+	let numberOfDays = Math.floor((time - timestmp) / (24 * 60 * 60 * 1000));
+	// current date - one full year
+	let weekNumber = Math.ceil((time.getDay() + 1 + numberOfDays) / 7);
+	// math.ceil rounds up
+	document.querySelector('.currentWeekNumber').textContent = `${weekNumber}`; // displays current week number
 }
 
+// location logic
 function findMe() {
 	const status = document.querySelector('.place');
 
@@ -93,7 +98,6 @@ function findMe() {
 		// console.log(position);
 		const latitude = position.coords.latitude;
 		const longitude = position.coords.longitude;
-		// status.textContent = `I'm going to find you`;
 		// alert(latitude + ' ' + longitude);
 		const geoURL =
 			'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en';
@@ -106,17 +110,6 @@ function findMe() {
 				status.textContent = `In ${data.city}, ${data.countryName}`;
 				document.querySelector('.currentPlace').textContent = `${data.city}`;
 			});
-
-		// const response = await fetch(geoURL);
-		// const data = await response.json();
-		// if (response.ok) {
-		// 	// Update DOM elements
-		// 	status.textContent = `I'm going to find you`;
-		// 	console.log(data);
-		// } else {
-		// 	status.textContent = 'An error occured';
-		// 	console.log(data);
-		// }
 	}
 
 	function error(showError) {
@@ -129,6 +122,7 @@ function findMe() {
 	navigator.geolocation.getCurrentPosition(success, error);
 }
 
+// button logic
 function more() {
 	var x = document.getElementById('myDIV');
 	if (x.style.display === 'none') {

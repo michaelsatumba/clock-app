@@ -85,9 +85,13 @@ p {
 	background-color: black;
 }
 
-/* #myDIV p {
-	color: black;
-} */
+#myDIV p {
+	letter-spacing: 1px;
+}
+
+.stats {
+	font-weight: 800;
+}
 
 .currentTimezone {
 	display: flex;
