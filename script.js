@@ -90,6 +90,8 @@ function showTime() {
 	document.querySelector('.currentWeekNumber').textContent = `${weekNumber}`; // displays current week number
 }
 
+const searchApiKey = 'a53e7014f41f2cd34a0e24f9dc2c5737';
+
 // location logic
 function findMe() {
 	const status = document.querySelector('.place');
@@ -99,16 +101,15 @@ function findMe() {
 		const latitude = position.coords.latitude;
 		const longitude = position.coords.longitude;
 		// alert(latitude + ' ' + longitude);
-		const geoURL =
-			'https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en';
+		const geoURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${searchApiKey}`;
 
 		fetch(geoURL)
 			.then((res) => res.json())
 			.then((data) => {
-				// console.log(data);
+				console.log(data);
 				// console.log(data.city);
-				status.textContent = `In ${data.city}, ${data.countryName}`;
-				document.querySelector('.currentPlace').textContent = `${data.city}`;
+				status.textContent = `In ${data.name}, ${data.sys.country}`;
+				document.querySelector('.currentPlace').textContent = `${data.name}`;
 			});
 	}
 
